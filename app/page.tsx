@@ -36,7 +36,7 @@ export default function Home() {
       <div className="mx-auto flex min-h-screen max-w-[560px] flex-col px-6 py-16">
         {/* The name of the app — the single warm accent on the dash */}
         <header>
-          <h1 className="text-4xl font-semibold tracking-tight">
+          <h1 className="text-6xl font-semibold tracking-tight">
             Zomato<span className="text-amber-600">-Lite</span>
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-neutral-500">

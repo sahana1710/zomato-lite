@@ -7,6 +7,7 @@
 
 import { use, useEffect, useState } from "react";
 import { StarRow } from "@/components/StarIcon";
+import { BurritoTile } from "@/components/BurritoIllustration";
 
 type Review = {
   id: number;
@@ -129,12 +130,7 @@ export default function RestaurantPage({
               <Chip>{data.area}</Chip>
             </div>
           </div>
-          <div
-            aria-hidden="true"
-            className="grid h-14 w-14 shrink-0 place-items-center rounded-lg bg-neutral-900 text-xl font-semibold text-amber-600"
-          >
-            {data.name.charAt(0)}
-          </div>
+          <BurritoTile className="h-20 w-20 sm:h-24 sm:w-24" />
         </header>
 
         {emptyRoom ? (
