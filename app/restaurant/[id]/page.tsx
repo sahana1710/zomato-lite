@@ -38,17 +38,28 @@ function Chip({ children }: { children: React.ReactNode }) {
   );
 }
 
-// The page's single warm shout: a full-width amber call to action.
-function WriteReviewButton({ id }: { id: string }) {
+// A quiet CTA in the Reviews heading row: pencil icon + words, brand red only when hovered.
+function WriteReviewLink({ id }: { id: string }) {
   return (
     <a
       href={`/review/${id}`}
-      className="group mt-12 flex w-full items-center justify-between rounded-lg bg-brand px-6 py-4 font-medium text-white transition-colors hover:bg-brand-dark"
+      className="group flex items-center gap-1.5 rounded text-neutral-700 transition-colors hover:text-brand"
     >
-      <span>Write a review</span>
-      <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-        →
-      </span>
+      <svg
+        aria-hidden="true"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="shrink-0"
+      >
+        <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+      </svg>
+      <span className="transition-colors group-hover:text-brand">Write a review</span>
     </a>
   );
 }
@@ -175,7 +186,10 @@ export default function RestaurantPage({
           <>
             {/* One Reviews section: the highlighted latest review, then the older ones */}
             <section className="mt-6 pt-6">
-              <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
+                <WriteReviewLink id={id} />
+              </div>
               {data.latestReview && (
                 <div className="relative mt-4 overflow-hidden rounded-lg bg-red-100/70 p-6">
                   <span
@@ -215,8 +229,6 @@ export default function RestaurantPage({
                 </ul>
               )}
             </section>
-
-            <WriteReviewButton id={id} />
           </>
         )}
       </div>
