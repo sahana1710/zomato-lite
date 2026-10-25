@@ -4,7 +4,7 @@
 // Collects one rating and one comment, hands them to POST /api/reviews, and steps back.
 // The backend judges the submission; this page only displays whatever it says.
 
-import { use, useEffect, useState } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { StarIcon } from "@/components/StarIcon";
 
@@ -16,20 +16,11 @@ export default function ReviewPage({
   const { restaurantId } = use(params);
   const router = useRouter();
 
-  const [name, setName] = useState<string | null>(null);
   const [rating, setRating] = useState<number | null>(null);
   const [hover, setHover] = useState<number | null>(null);
   const [comment, setComment] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-
-  // Ask the API (not the database) for the restaurant's name — frontend talks to the waiter only.
-  useEffect(() => {
-    fetch(`/api/restaurants/${restaurantId}`)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => data && setName(data.name))
-      .catch(() => null);
-  }, [restaurantId]);
 
   const ready = rating !== null && comment.trim().length > 0;
   const shown = hover ?? rating ?? 0;
@@ -79,11 +70,11 @@ export default function ReviewPage({
             <span aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5">
               ←
             </span>
-            Back{name && ` ${name}`}
+            Back
           </a>
 
           <h1 className="text-center text-3xl font-semibold tracking-tight">
-            Review{name ? ` ${name}` : ""}
+            Review
           </h1>
         </div>
         <p className="mt-2 text-center text-sm text-neutral-500">
@@ -134,7 +125,7 @@ export default function ReviewPage({
             onChange={(event) => setComment(event.target.value)}
             rows={4}
             placeholder="What was it like?"
-            className="mt-3 w-full resize-none rounded-lg border border-neutral-300 bg-white p-4 text-sm leading-relaxed outline-none transition-colors focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
+            className="mt-3 w-full resize-none rounded-lg border border-neutral-300 bg-white p-4 leading-relaxed outline-none transition-colors focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
           />
 
           {/* Submit — grey until the review is worthy, amber the moment it is */}

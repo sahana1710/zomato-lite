@@ -32,7 +32,7 @@ function formatDate(iso: string) {
 
 function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-600">
+    <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-neutral-900">
       {children}
     </span>
   );
@@ -170,7 +170,7 @@ export default function RestaurantPage({
         ) : (
           <>
             {/* One Reviews section: the highlighted latest review, then the older ones */}
-            <section className="mt-8 pt-8">
+            <section className="mt-6 pt-6">
               <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
               {data.latestReview && (
                 <div className="relative mt-4 overflow-hidden rounded-lg bg-amber-200/60 p-6">
