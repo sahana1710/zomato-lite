@@ -65,7 +65,7 @@ export default function ReviewPage({
         <div className="relative flex items-center justify-center">
           <a
             href={`/restaurant/${restaurantId}`}
-            className="group absolute left-0 inline-flex items-center gap-1.5 text-sm text-neutral-700 transition-colors hover:text-brand"
+            className="group absolute left-0 inline-flex items-center gap-1.5 text-base text-neutral-700 transition-colors hover:text-brand"
           >
             {/* A real vector icon, not a unicode glyph — same recipe as the pencil on the restaurant page */}
             <svg
@@ -97,7 +97,7 @@ export default function ReviewPage({
         <form onSubmit={handleSubmit} className="mt-12">
           {/* Star picker, 1 to 5, with hover preview */}
           <div className="flex items-baseline justify-between">
-            <label className="text-xs uppercase tracking-wider text-neutral-400">Rating</label>
+            <label className="text-base uppercase tracking-wider text-neutral-400">Rating</label>
             {rating !== null && (
               <span className={`text-sm font-medium ${ratingTextClass(shown)}`}>{rating} / 5</span>
             )}
@@ -126,7 +126,7 @@ export default function ReviewPage({
           )}
 
           {/* Comment box */}
-          <label htmlFor="comment" className="mt-10 block text-xs uppercase tracking-wider text-neutral-400">
+          <label htmlFor="comment" className="mt-10 block text-base uppercase tracking-wider text-neutral-400">
             Comment
           </label>
           <textarea
@@ -142,7 +142,7 @@ export default function ReviewPage({
           <button
             type="submit"
             disabled={!ready || submitting}
-            className={`mt-8 w-full rounded-lg py-3.5 text-sm font-medium text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:cursor-not-allowed disabled:opacity-40 ${
+            className={`mt-8 w-full rounded-lg py-3.5 text-base font-medium text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:cursor-not-allowed disabled:opacity-40 ${
               ready ? "bg-brand hover:bg-brand-dark" : "bg-neutral-900"
             }`}
           >
