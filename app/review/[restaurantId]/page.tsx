@@ -71,7 +71,17 @@ export default function ReviewPage({
   return (
     <main className="min-h-screen bg-background text-neutral-900">
       <div className="mx-auto max-w-[560px] px-6 py-16">
-        <h1 className="text-3xl font-semibold tracking-tight">
+        <a
+          href={`/restaurant/${restaurantId}`}
+          className="group inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-900"
+        >
+          <span aria-hidden="true" className="transition-transform group-hover:-translate-x-0.5">
+            ←
+          </span>
+          Back{name ? ` to ${name}` : ""}
+        </a>
+
+        <h1 className="mt-6 text-3xl font-semibold tracking-tight">
           Review{name ? ` ${name}` : ""}
         </h1>
         <p className="mt-2 text-sm text-neutral-500">
