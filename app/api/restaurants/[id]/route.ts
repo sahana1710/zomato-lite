@@ -64,7 +64,7 @@ export async function GET(
     area: restaurant.area,
     averageRating: statsRow.average_rating === null ? null : Number(statsRow.average_rating),
     totalReviews: Number(statsRow.total_reviews),
-    latestReview: hasReviews ? toReview(newestFirst[0]) : null,
-    reviews: newestFirst.slice(1).map(toReview),
+    latestReview: hasReviews ? toReview(newestFirst[0] as ReviewRow) : null,
+    reviews: newestFirst.slice(1).map((row) => toReview(row as ReviewRow)),
   });
 }
