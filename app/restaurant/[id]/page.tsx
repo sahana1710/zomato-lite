@@ -180,7 +180,7 @@ export default function RestaurantPage({
                     className="relative text-xs uppercase tracking-wider text-neutral-400"
                     aria-hidden="true"
                   >
-                    Latest
+                    Latest review
                   </p>
                   <p className="relative mt-3 text-xl leading-relaxed">
                     {data.latestReview.comment}
