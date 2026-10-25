@@ -141,17 +141,21 @@ export default function RestaurantPage({
             <div>
               <p className="text-sm font-medium uppercase tracking-widest text-brand">Zomato-Lite</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
+              {/* Tags first, then the address on its own line below.
+                  Note: "Dine-in" is a static page label for now — the API has
+                  no tags column; per-restaurant tags would be a schema change. */}
               <div className="mt-4 flex flex-wrap gap-2">
                 <Chip>{data.cuisine}</Chip>
-                <Chip>{data.area}</Chip>
+                <Chip>Dine-in</Chip>
               </div>
+              <p className="mt-3 text-sm text-neutral-500">{data.area}</p>
             </div>
             <BurritoTile className="h-28 w-28 sm:h-36 sm:w-36" />
           </header>
 
           {!emptyRoom && (
             <div className="pb-4">
-              <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
+              <p className="text-sm uppercase tracking-wider text-neutral-700">Average rating</p>
               <div className="mt-3 flex items-center gap-4">
                 {/* ← THE LINE: the average is printed, never calculated. Color = meaning. */}
                 <p
@@ -187,7 +191,7 @@ export default function RestaurantPage({
             {/* One Reviews section: the highlighted latest review, then the older ones */}
             <section className="mt-6 pt-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
+                <h2 className="text-sm uppercase tracking-widest text-neutral-700">Reviews</h2>
                 <WriteReviewLink id={id} />
               </div>
               {data.latestReview && (
