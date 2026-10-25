@@ -172,7 +172,7 @@ export default function RestaurantPage({
                 <div className="relative mt-4 overflow-hidden rounded-lg bg-amber-200/60 p-6">
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -top-2 right-4 select-none font-serif text-8xl leading-none text-amber-300"
+                    className="pointer-events-none absolute right-5 top-2 select-none font-serif text-7xl leading-none text-amber-300"
                   >
                     ”
                   </span>
