@@ -128,6 +128,15 @@ export default function RestaurantPage({
             <div className="mt-4 flex flex-wrap gap-2">
               <Chip>{data.cuisine}</Chip>
               <Chip>{data.area}</Chip>
+              {data.averageRating !== null && (
+                <span className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1">
+                  <StarRow value={data.averageRating} size="h-3 w-3" />
+                  <span className="text-xs font-medium text-amber-700">
+                    {data.averageRating} · {data.totalReviews} review
+                    {data.totalReviews === 1 ? "" : "s"}
+                  </span>
+                </span>
+              )}
             </div>
           </div>
           <BurritoTile className="h-20 w-20 sm:h-24 sm:w-24" />
