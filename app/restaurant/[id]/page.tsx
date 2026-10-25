@@ -126,7 +126,7 @@ export default function RestaurantPage({
         {/* Restaurant identity — monogram tile, name, chips */}
         <header className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-[11px] uppercase tracking-widest text-amber-600">Zomato-Lite</p>
+            <p className="text-sm font-medium uppercase tracking-widest text-amber-600">Zomato-Lite</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
             <div className="mt-4 flex flex-wrap gap-2">
               <Chip>{data.cuisine}</Chip>
@@ -166,7 +166,7 @@ export default function RestaurantPage({
             </div>
 
             {/* One Reviews section: the highlighted latest review, then the older ones */}
-            <section className="mt-12">
+            <section className="mt-12 border-t border-neutral-200 pt-10">
               <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
               {data.latestReview && (
                 <div className="relative mt-4 overflow-hidden rounded-lg border border-neutral-200 border-l-2 border-l-amber-500 bg-white p-6">
