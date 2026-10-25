@@ -169,23 +169,23 @@ export default function RestaurantPage({
             <section className="mt-12 border-t border-neutral-200 pt-10">
               <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
               {data.latestReview && (
-                <div className="relative mt-4 overflow-hidden rounded-lg bg-neutral-900 p-6">
+                <div className="relative mt-4 overflow-hidden rounded-lg bg-amber-100 p-6">
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -top-2 right-4 select-none font-serif text-8xl leading-none text-neutral-800"
+                    className="pointer-events-none absolute -top-2 right-4 select-none font-serif text-8xl leading-none text-amber-200"
                   >
                     ”
                   </span>
                   <p
-                    className="relative text-xs font-medium uppercase tracking-widest text-amber-500"
+                    className="relative text-xs font-medium uppercase tracking-widest text-amber-700"
                     aria-hidden="true"
                   >
                     Latest review
                   </p>
-                  <p className="relative mt-3 text-xl leading-relaxed text-neutral-50">
+                  <p className="relative mt-3 text-xl leading-relaxed text-amber-950">
                     {data.latestReview.comment}
                   </p>
-                  <p className="relative mt-5 flex items-center gap-3 text-sm text-neutral-400">
+                  <p className="relative mt-5 flex items-center gap-3 text-sm text-amber-800/80">
                     <StarRow value={data.latestReview.rating} size="h-4 w-4" />
                     <span>{formatDate(data.latestReview.createdAt)}</span>
                   </p>
