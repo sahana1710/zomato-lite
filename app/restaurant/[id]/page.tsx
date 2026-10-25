@@ -29,17 +29,45 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 }
 
+function Chip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-600">
+      {children}
+    </span>
+  );
+}
+
+// The page's single warm shout: a full-width amber call to action.
+function WriteReviewButton({ id }: { id: string }) {
+  return (
+    <a
+      href={`/review/${id}`}
+      className="group mt-12 flex w-full items-center justify-between rounded-lg bg-amber-600 px-6 py-4 font-medium text-white transition-colors hover:bg-amber-500"
+    >
+      <span>Write a review</span>
+      <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+        →
+      </span>
+    </a>
+  );
+}
+
 // Grey placeholder blocks shaped like the content, so the page never jumps on arrival.
 function Skeleton() {
   return (
     <div className="mx-auto max-w-[560px] px-6 py-16">
-      <div className="h-8 w-52 animate-pulse rounded bg-neutral-200" />
-      <div className="mt-3 h-4 w-32 animate-pulse rounded bg-neutral-200" />
+      <div className="flex items-start justify-between">
+        <div>
+          <div className="h-3 w-24 animate-pulse rounded bg-neutral-200" />
+          <div className="mt-3 h-8 w-52 animate-pulse rounded bg-neutral-200" />
+        </div>
+        <div className="h-14 w-14 animate-pulse rounded-lg bg-neutral-200" />
+      </div>
       <div className="mt-10 border-t border-neutral-200 pt-10">
         <div className="h-3 w-24 animate-pulse rounded bg-neutral-200" />
         <div className="mt-3 h-16 w-36 animate-pulse rounded bg-neutral-200" />
       </div>
-      <div className="mt-8 h-40 animate-pulse rounded-lg bg-neutral-200" />
+      <div className="mt-8 h-44 animate-pulse rounded-lg bg-neutral-200" />
       <div className="mt-8 space-y-6">
         <div className="h-4 w-3/4 animate-pulse rounded bg-neutral-200" />
         <div className="h-4 w-2/3 animate-pulse rounded bg-neutral-200" />
@@ -70,7 +98,7 @@ export default function RestaurantPage({
 
   if (status === 404) {
     return (
-      <main className="min-h-screen bg-neutral-50 text-neutral-900">
+      <main className="min-h-screen bg-background text-neutral-900">
         <div className="mx-auto max-w-[560px] px-6 py-16">
           <p className="text-neutral-500">There is no restaurant at this address.</p>
         </div>
@@ -80,7 +108,7 @@ export default function RestaurantPage({
 
   if (!data) {
     return (
-      <main className="min-h-screen bg-neutral-50 text-neutral-900">
+      <main className="min-h-screen bg-background text-neutral-900">
         <Skeleton />
       </main>
     );
@@ -89,33 +117,42 @@ export default function RestaurantPage({
   const emptyRoom = data.averageRating === null && data.latestReview === null;
 
   return (
-    <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      <div className="mx-auto max-w-[560px] px-6 py-16">
-        {/* Restaurant identity */}
-        <h1 className="text-3xl font-semibold tracking-tight">{data.name}</h1>
-        <p className="mt-2 text-sm text-neutral-500">
-          {data.cuisine} · {data.area}
-        </p>
+    <main className="min-h-screen bg-background text-neutral-900">
+      <div className="mx-auto max-w-[560px] px-6 py-14">
+        {/* Restaurant identity — monogram tile, name, chips */}
+        <header className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-[11px] uppercase tracking-widest text-amber-600">Zomato-Lite</p>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Chip>{data.cuisine}</Chip>
+              <Chip>{data.area}</Chip>
+            </div>
+          </div>
+          <div
+            aria-hidden="true"
+            className="grid h-14 w-14 shrink-0 place-items-center rounded-lg bg-neutral-900 text-xl font-semibold text-amber-600"
+          >
+            {data.name.charAt(0)}
+          </div>
+        </header>
 
         {emptyRoom ? (
-          <section className="mt-12 rounded-lg border border-neutral-200 bg-white p-10 text-center">
+          <section className="mt-12 rounded-lg border border-dashed border-neutral-300 bg-white p-10 text-center">
             <p className="text-lg font-medium">No reviews yet.</p>
             <p className="mt-2 text-sm leading-relaxed text-neutral-500">
               Be the first — the honest opening deserves an honest rating.
             </p>
-            <a
-              href={`/review/${id}`}
-              className="mt-6 inline-block rounded-lg bg-neutral-900 px-5 py-2.5 text-sm text-white transition-colors hover:bg-neutral-700"
-            >
-              Write the first review
-            </a>
+            <div className="mt-6">
+              <WriteReviewButtonHeroless id={id} />
+            </div>
           </section>
         ) : (
           <>
             {/* The average — given to us as 4.4, printed as 4.4. No adding. No dividing. */}
             <div className="mt-10 border-t border-neutral-200 pt-10">
               <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
-              <div className="mt-3 flex items-baseline gap-3">
+              <div className="mt-3 flex items-baseline gap-4">
                 {/* ← THE LINE: the average is printed, never calculated. */}
                 <p className="text-7xl font-semibold tracking-tight text-amber-600">
                   {data.averageRating}
@@ -129,12 +166,20 @@ export default function RestaurantPage({
               </div>
             </div>
 
-            {/* The latest review — highlighted, because recency is what people trust */}
+            {/* The latest review — highlighted, with a quiet pull-quote glyph */}
             {data.latestReview && (
-              <section className="mt-8 rounded-lg border border-neutral-200 border-l-2 border-l-amber-500 bg-white p-6">
-                <p className="text-xs uppercase tracking-wider text-neutral-400">Latest review</p>
-                <p className="mt-3 text-xl leading-relaxed">{data.latestReview.comment}</p>
-                <p className="mt-4 flex items-center gap-3 text-sm text-neutral-500">
+              <section className="relative mt-8 overflow-hidden rounded-lg border border-neutral-200 border-l-2 border-l-amber-500 bg-white p-6">
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 top-1 font-serif text-7xl leading-none text-amber-100"
+                >
+                  ”
+                </span>
+                <p className="relative text-xs uppercase tracking-wider text-neutral-400">
+                  Latest review
+                </p>
+                <p className="relative mt-3 text-xl leading-relaxed">{data.latestReview.comment}</p>
+                <p className="relative mt-4 flex items-center gap-3 text-sm text-neutral-500">
                   <StarRow value={data.latestReview.rating} size="h-4 w-4" />
                   <span>{formatDate(data.latestReview.createdAt)}</span>
                 </p>
@@ -155,18 +200,23 @@ export default function RestaurantPage({
                 ))}
               </ul>
             )}
+
+            <WriteReviewButton id={id} />
           </>
         )}
-
-        <p className="mt-12 border-t border-neutral-200 pt-8">
-          <a
-            href={`/review/${id}`}
-            className="text-sm font-medium text-amber-700 underline underline-offset-4 transition-colors hover:text-amber-800"
-          >
-            Write a review
-          </a>
-        </p>
       </div>
     </main>
+  );
+}
+
+// The empty state's CTA — identical warmth, centered instead of edge-to-edge.
+function WriteReviewButtonHeroless({ id }: { id: string }) {
+  return (
+    <a
+      href={`/review/${id}`}
+      className="inline-block rounded-lg bg-amber-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-amber-500"
+    >
+      Write the first review
+    </a>
   );
 }

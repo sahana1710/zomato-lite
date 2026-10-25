@@ -69,7 +69,7 @@ export default function ReviewPage({
   };
 
   return (
-    <main className="min-h-screen bg-neutral-50 text-neutral-900">
+    <main className="min-h-screen bg-background text-neutral-900">
       <div className="mx-auto max-w-[560px] px-6 py-16">
         <h1 className="text-3xl font-semibold tracking-tight">
           Review{name ? ` ${name}` : ""}
@@ -125,14 +125,19 @@ export default function ReviewPage({
             className="mt-3 w-full resize-none rounded-lg border border-neutral-300 bg-white p-4 text-sm leading-relaxed outline-none transition-colors focus:border-neutral-900 focus:ring-1 focus:ring-neutral-900"
           />
 
-          {/* Submit — quiet until it is legit */}
+          {/* Submit — grey until the review is worthy, amber the moment it is */}
           <button
             type="submit"
             disabled={!ready || submitting}
-            className="mt-8 w-full rounded-lg bg-neutral-900 py-3.5 text-sm font-medium text-white transition-colors hover:bg-neutral-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:cursor-not-allowed disabled:opacity-40"
+            className={`mt-8 w-full rounded-lg py-3.5 text-sm font-medium text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:cursor-not-allowed disabled:opacity-40 ${
+              ready ? "bg-amber-600 hover:bg-amber-500" : "bg-neutral-900"
+            }`}
           >
             {submitting ? "Sending…" : "Submit review"}
           </button>
+          <p className="mt-3 text-center text-xs text-neutral-400">
+            Published instantly to the restaurant page.
+          </p>
 
           {error && (
             <p className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">

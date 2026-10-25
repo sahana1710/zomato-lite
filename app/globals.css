@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
+  --background: #faf9f7;
   --foreground: #171717;
 }
 
@@ -10,7 +10,7 @@
   --color-foreground: var(--foreground);
 }
 
-/* The app decides its own design: light, warm-neutral, always.
+/* The app decides its own design: warm-light, near-black, one amber accent, always.
    Font: Next loads Geist; fall back thoughtfully if it ever can't. */
 body {
   background: var(--background);
