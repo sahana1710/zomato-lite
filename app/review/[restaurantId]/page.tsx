@@ -1,12 +1,13 @@
 "use client";
 
 // Screen 1 — /review/[restaurantId]
-// Collects one rating and one comment, hands them to POST /api/reviews, and steps back.
-// The backend judges the submission; this page only displays whatever it says.
+// Collects one rating and one comment, hands them to POST /api/reviews.
+// Only after the backend confirms storage does the thank-you appear; the page
+// displays whatever it says.
 
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
-import { StarIcon, ratingTextClass, ratingFillClass } from "@/components/StarIcon";
+import { StarIcon, StarRow, ratingTextClass, ratingFillClass } from "@/components/StarIcon";
 
 export default function ReviewPage({
   params,
@@ -21,6 +22,7 @@ export default function ReviewPage({
   const [comment, setComment] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [thanks, setThanks] = useState(false);
 
   const ready = rating !== null && comment.trim().length > 0;
   const shown = hover ?? rating ?? 0;
@@ -42,7 +44,8 @@ export default function ReviewPage({
     setSubmitting(false);
 
     if (res.status === 201) {
-      router.push(`/restaurant/${restaurantId}`);
+      // The review exists; only now does the thank-you earn its place.
+      setThanks(true);
       return;
     }
 
@@ -159,6 +162,52 @@ export default function ReviewPage({
           )}
         </form>
       </div>
+
+      {/* The thank-you: a plain bordered toast, no shadows, shown only after the backend's 201.
+          It echoes the submitted stars — same component, same tier colors. */}
+      {thanks && (
+        <div className="fixed inset-0 z-20 flex items-center justify-center bg-neutral-900/40 px-6">
+          <div
+            role="dialog"
+            aria-labelledby="thanks-title"
+            className="w-full max-w-sm rounded-lg border border-neutral-200 bg-white p-8 text-center"
+          >
+            <svg
+              aria-hidden="true"
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mx-auto text-green-600"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <path d="M22 4L12 14.01l-3-3" />
+            </svg>
+            <h2 id="thanks-title" className="mt-4 text-xl font-semibold tracking-tight">
+              Thank you!
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-neutral-500">
+              Your review is live on the restaurant page.
+            </p>
+            {rating !== null && (
+              <div className="mt-4 flex justify-center" aria-label={`You rated ${rating} out of 5`}>
+                <StarRow value={rating} size="h-5 w-5" />
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => router.push(`/restaurant/${restaurantId}`)}
+              className="mt-6 w-full rounded-lg bg-brand py-3 text-base font-medium text-white transition-colors hover:bg-brand-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              See it on the page
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
