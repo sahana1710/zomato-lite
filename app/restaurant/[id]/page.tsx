@@ -6,6 +6,7 @@
 // this page's only job is to display them beautifully.
 
 import { use, useEffect, useState } from "react";
+import { StarRow } from "@/components/StarIcon";
 
 type Review = {
   id: number;
@@ -24,12 +25,28 @@ type RestaurantData = {
   reviews: Review[];
 };
 
-function Stars({ value }: { value: number }) {
-  return <span aria-hidden="true" className="text-amber-600">★ {value}</span>;
-}
-
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+}
+
+// Grey placeholder blocks shaped like the content, so the page never jumps on arrival.
+function Skeleton() {
+  return (
+    <div className="mx-auto max-w-[560px] px-6 py-16">
+      <div className="h-8 w-52 animate-pulse rounded bg-neutral-200" />
+      <div className="mt-3 h-4 w-32 animate-pulse rounded bg-neutral-200" />
+      <div className="mt-10 border-t border-neutral-200 pt-10">
+        <div className="h-3 w-24 animate-pulse rounded bg-neutral-200" />
+        <div className="mt-3 h-16 w-36 animate-pulse rounded bg-neutral-200" />
+      </div>
+      <div className="mt-8 h-40 animate-pulse rounded-lg bg-neutral-200" />
+      <div className="mt-8 space-y-6">
+        <div className="h-4 w-3/4 animate-pulse rounded bg-neutral-200" />
+        <div className="h-4 w-2/3 animate-pulse rounded bg-neutral-200" />
+        <div className="h-4 w-1/2 animate-pulse rounded bg-neutral-200" />
+      </div>
+    </div>
+  );
 }
 
 export default function RestaurantPage({
@@ -64,9 +81,7 @@ export default function RestaurantPage({
   if (!data) {
     return (
       <main className="min-h-screen bg-neutral-50 text-neutral-900">
-        <div className="mx-auto max-w-[560px] px-6 py-16">
-          <p className="text-neutral-400">Loading…</p>
-        </div>
+        <Skeleton />
       </main>
     );
   }
@@ -97,17 +112,20 @@ export default function RestaurantPage({
           </section>
         ) : (
           <>
-            {/* The average — given to us as 4.5, printed as 4.5. No adding. No dividing. */}
+            {/* The average — given to us as 4.4, printed as 4.4. No adding. No dividing. */}
             <div className="mt-10 border-t border-neutral-200 pt-10">
               <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
-              <div className="mt-2 flex items-baseline gap-3">
+              <div className="mt-3 flex items-baseline gap-3">
                 {/* ← THE LINE: the average is printed, never calculated. */}
                 <p className="text-7xl font-semibold tracking-tight text-amber-600">
                   {data.averageRating}
                 </p>
-                <span className="text-sm text-neutral-500">
-                  ★ out of 5 · {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
-                </span>
+                <div className="flex flex-col">
+                  <StarRow value={data.averageRating ?? 0} size="h-4 w-4" />
+                  <span className="mt-1.5 text-sm text-neutral-500">
+                    out of 5 · {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -117,7 +135,7 @@ export default function RestaurantPage({
                 <p className="text-xs uppercase tracking-wider text-neutral-400">Latest review</p>
                 <p className="mt-3 text-xl leading-relaxed">{data.latestReview.comment}</p>
                 <p className="mt-4 flex items-center gap-3 text-sm text-neutral-500">
-                  <Stars value={data.latestReview.rating} />
+                  <StarRow value={data.latestReview.rating} size="h-4 w-4" />
                   <span>{formatDate(data.latestReview.createdAt)}</span>
                 </p>
               </section>
@@ -130,7 +148,7 @@ export default function RestaurantPage({
                   <li key={review.id} className="py-5">
                     <p className="leading-relaxed">{review.comment}</p>
                     <p className="mt-2 flex items-center gap-3 text-sm text-neutral-500">
-                      <Stars value={review.rating} />
+                      <StarRow value={review.rating} size="h-4 w-4" />
                       <span>{formatDate(review.createdAt)}</span>
                     </p>
                   </li>

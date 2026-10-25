@@ -6,6 +6,7 @@
 
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { StarIcon } from "@/components/StarIcon";
 
 export default function ReviewPage({
   params,
@@ -85,7 +86,7 @@ export default function ReviewPage({
               <span className="text-sm font-medium text-amber-600">{rating} / 5</span>
             )}
           </div>
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-3 flex items-center gap-1">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
@@ -94,11 +95,16 @@ export default function ReviewPage({
                 onClick={() => setRating(star)}
                 onMouseEnter={() => setHover(star)}
                 onMouseLeave={() => setHover(null)}
-                className={`rounded px-1 text-5xl transition-colors focus:outline-none focus-visible:text-amber-500 ${
-                  star <= shown ? "text-amber-500" : "text-neutral-300 hover:text-amber-300"
+                className={`group rounded p-1 transition-colors focus:outline-none ${
+                  star <= shown ? "focus-visible:text-amber-500" : ""
                 }`}
               >
-                ★
+                <StarIcon
+                  filled={star <= shown}
+                  className={`h-10 w-10 ${
+                    star <= shown ? "" : "text-neutral-300 group-hover:text-amber-300"
+                  }`}
+                />
               </button>
             ))}
           </div>
