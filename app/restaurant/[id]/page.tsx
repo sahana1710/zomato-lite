@@ -64,11 +64,14 @@ function Skeleton() {
         </div>
         <div className="h-14 w-14 animate-pulse rounded-lg bg-neutral-200" />
       </div>
-      <div className="mt-10 border-t border-neutral-200 pt-10">
+      <div className="mt-8">
         <div className="h-3 w-24 animate-pulse rounded bg-neutral-200" />
         <div className="mt-3 h-16 w-36 animate-pulse rounded bg-neutral-200" />
       </div>
-      <div className="mt-8 h-44 animate-pulse rounded-lg bg-neutral-200" />
+      <div className="mt-12">
+        <div className="h-3 w-16 animate-pulse rounded bg-neutral-200" />
+      </div>
+      <div className="mt-4 h-44 animate-pulse rounded-lg bg-neutral-200" />
       <div className="mt-8 space-y-6">
         <div className="h-4 w-3/4 animate-pulse rounded bg-neutral-200" />
         <div className="h-4 w-2/3 animate-pulse rounded bg-neutral-200" />
@@ -128,15 +131,6 @@ export default function RestaurantPage({
             <div className="mt-4 flex flex-wrap gap-2">
               <Chip>{data.cuisine}</Chip>
               <Chip>{data.area}</Chip>
-              {data.averageRating !== null && (
-                <span className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1">
-                  <StarRow value={data.averageRating} size="h-3 w-3" />
-                  <span className="text-xs font-medium text-amber-700">
-                    {data.averageRating} · {data.totalReviews} review
-                    {data.totalReviews === 1 ? "" : "s"}
-                  </span>
-                </span>
-              )}
             </div>
           </div>
           <BurritoTile className="h-20 w-20 sm:h-24 sm:w-24" />
@@ -154,8 +148,8 @@ export default function RestaurantPage({
           </section>
         ) : (
           <>
-            {/* The average — given to us as 4.4, printed as 4.4. No adding. No dividing. */}
-            <div className="mt-10 border-t border-neutral-200 pt-10">
+            {/* The average — sits with the identity block, given to us as 4.4, printed as 4.4. No adding. No dividing. */}
+            <div className="mt-8">
               <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
               <div className="mt-3 flex items-baseline gap-4">
                 {/* ← THE LINE: the average is printed, never calculated. */}
@@ -171,40 +165,48 @@ export default function RestaurantPage({
               </div>
             </div>
 
-            {/* The latest review — highlighted, with a quiet pull-quote glyph */}
-            {data.latestReview && (
-              <section className="relative mt-8 overflow-hidden rounded-lg border border-neutral-200 border-l-2 border-l-amber-500 bg-white p-6">
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-4 top-1 font-serif text-7xl leading-none text-amber-100"
-                >
-                  ”
-                </span>
-                <p className="relative text-xs uppercase tracking-wider text-neutral-400">
-                  Latest review
-                </p>
-                <p className="relative mt-3 text-xl leading-relaxed">{data.latestReview.comment}</p>
-                <p className="relative mt-4 flex items-center gap-3 text-sm text-neutral-500">
-                  <StarRow value={data.latestReview.rating} size="h-4 w-4" />
-                  <span>{formatDate(data.latestReview.createdAt)}</span>
-                </p>
-              </section>
-            )}
+            {/* One Reviews section: the highlighted latest review, then the older ones */}
+            <section className="mt-12">
+              <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
+              {data.latestReview && (
+                <div className="relative mt-4 overflow-hidden rounded-lg border border-neutral-200 border-l-2 border-l-amber-500 bg-white p-6">
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute right-4 top-1 font-serif text-7xl leading-none text-amber-100"
+                  >
+                    ”
+                  </span>
+                  <p
+                    className="relative text-xs uppercase tracking-wider text-neutral-400"
+                    aria-hidden="true"
+                  >
+                    Latest
+                  </p>
+                  <p className="relative mt-3 text-xl leading-relaxed">
+                    {data.latestReview.comment}
+                  </p>
+                  <p className="relative mt-4 flex items-center gap-3 text-sm text-neutral-500">
+                    <StarRow value={data.latestReview.rating} size="h-4 w-4" />
+                    <span>{formatDate(data.latestReview.createdAt)}</span>
+                  </p>
+                </div>
+              )}
 
-            {/* The older reviews, plain and quiet */}
-            {data.reviews.length > 0 && (
-              <ul className="mt-8 divide-y divide-neutral-200 border-t border-neutral-200">
-                {data.reviews.map((review) => (
-                  <li key={review.id} className="py-5">
-                    <p className="leading-relaxed">{review.comment}</p>
-                    <p className="mt-2 flex items-center gap-3 text-sm text-neutral-500">
-                      <StarRow value={review.rating} size="h-4 w-4" />
-                      <span>{formatDate(review.createdAt)}</span>
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
+              {/* The rest, plain and quiet, under the same roof */}
+              {data.reviews.length > 0 && (
+                <ul className="mt-6 divide-y divide-neutral-200 border-t border-neutral-200">
+                  {data.reviews.map((review) => (
+                    <li key={review.id} className="py-5">
+                      <p className="leading-relaxed">{review.comment}</p>
+                      <p className="mt-2 flex items-center gap-3 text-sm text-neutral-500">
+                        <StarRow value={review.rating} size="h-4 w-4" />
+                        <span>{formatDate(review.createdAt)}</span>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
 
             <WriteReviewButton id={id} />
           </>
