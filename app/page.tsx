@@ -19,7 +19,7 @@ function Card({
       className="group block rounded-lg border border-neutral-200 bg-white p-5 transition-colors hover:border-brand"
     >
       <div className="flex items-start justify-between">
-        <p className="text-[11px] uppercase tracking-wider text-brand">{kicker}</p>
+        <p className="text-sm uppercase tracking-wider text-brand">{kicker}</p>
         <span aria-hidden="true" className="text-brand opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
           →
         </span>
@@ -48,7 +48,7 @@ export default function Home() {
             {identity.map((pill) => (
               <span
                 key={pill}
-                className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs text-neutral-600"
+                className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-sm text-neutral-600"
               >
                 {pill}
               </span>
