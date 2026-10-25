@@ -22,6 +22,8 @@ type RestaurantData = {
   area: string;
   averageRating: number | null;
   totalReviews: number;
+  page: number;
+  totalPages: number;
   latestReview: Review | null;
   reviews: Review[];
 };
@@ -101,15 +103,16 @@ export default function RestaurantPage({
 
   const [data, setData] = useState<RestaurantData | null>(null);
   const [status, setStatus] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetch(`/api/restaurants/${id}`).then((res) => {
+    fetch(`/api/restaurants/${id}?page=${page}`).then((res) => {
       setStatus(res.status);
       if (res.ok) {
         return res.json().then((json: RestaurantData) => setData(json));
       }
     });
-  }, [id]);
+  }, [id, page]);
 
   if (status === 404) {
     return (
@@ -231,6 +234,31 @@ export default function RestaurantPage({
                     </li>
                   ))}
                 </ul>
+              )}
+
+              {/* The pager — Previous/Next and the backend's own page numbers. */}
+              {data.totalPages > 1 && (
+                <nav className="mt-6 flex items-center justify-between">
+                  <button
+                    type="button"
+                    disabled={data.page === 1}
+                    onClick={() => setPage(data.page - 1)}
+                    className="text-sm text-neutral-700 transition-colors hover:text-brand disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-neutral-700"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-sm text-neutral-500">
+                    Page {data.page} of {data.totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={data.page === data.totalPages}
+                    onClick={() => setPage(data.page + 1)}
+                    className="text-sm text-neutral-700 transition-colors hover:text-brand disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:text-neutral-700"
+                  >
+                    Next
+                  </button>
+                </nav>
               )}
             </section>
           </>
