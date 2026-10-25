@@ -6,7 +6,7 @@
 // this page's only job is to display them beautifully.
 
 import { use, useEffect, useState } from "react";
-import { StarRow } from "@/components/StarIcon";
+import { StarRow, ratingTextClass } from "@/components/StarIcon";
 import { BurritoTile } from "@/components/BurritoIllustration";
 
 type Review = {
@@ -43,7 +43,7 @@ function WriteReviewButton({ id }: { id: string }) {
   return (
     <a
       href={`/review/${id}`}
-      className="group mt-12 flex w-full items-center justify-between rounded-lg bg-amber-600 px-6 py-4 font-medium text-white transition-colors hover:bg-amber-500"
+      className="group mt-12 flex w-full items-center justify-between rounded-lg bg-brand px-6 py-4 font-medium text-white transition-colors hover:bg-brand-dark"
     >
       <span>Write a review</span>
       <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
@@ -128,7 +128,7 @@ export default function RestaurantPage({
           {/* Restaurant identity — monogram tile, name, chips */}
           <header className="flex items-start justify-between gap-4 pb-4 pt-2">
             <div>
-              <p className="text-sm font-medium uppercase tracking-widest text-amber-600">Zomato-Lite</p>
+              <p className="text-sm font-medium uppercase tracking-widest text-brand">Zomato-Lite</p>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
               <div className="mt-4 flex flex-wrap gap-2">
                 <Chip>{data.cuisine}</Chip>
@@ -142,8 +142,12 @@ export default function RestaurantPage({
             <div className="pb-4">
               <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
               <div className="mt-3 flex items-center gap-4">
-                {/* ← THE LINE: the average is printed, never calculated. */}
-                <p className="text-7xl font-semibold leading-none tracking-tight text-amber-600">
+                {/* ← THE LINE: the average is printed, never calculated. Color = meaning. */}
+                <p
+                  className={`text-7xl font-semibold leading-none tracking-tight ${ratingTextClass(
+                    data.averageRating ?? 0,
+                  )}`}
+                >
                   {data.averageRating}
                 </p>
                 <div className="flex flex-col items-start">
@@ -225,7 +229,7 @@ function WriteReviewButtonHeroless({ id }: { id: string }) {
   return (
     <a
       href={`/review/${id}`}
-      className="inline-block rounded-lg bg-amber-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-amber-500"
+      className="inline-block rounded-lg bg-brand px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
     >
       Write the first review
     </a>

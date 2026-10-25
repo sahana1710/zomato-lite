@@ -16,11 +16,11 @@ function Card({
   return (
     <Link
       href={href}
-      className="group block rounded-lg border border-neutral-200 bg-white p-5 transition-colors hover:border-amber-500"
+      className="group block rounded-lg border border-neutral-200 bg-white p-5 transition-colors hover:border-brand"
     >
       <div className="flex items-start justify-between">
-        <p className="text-[11px] uppercase tracking-wider text-amber-600">{kicker}</p>
-        <span aria-hidden="true" className="text-amber-600 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
+        <p className="text-[11px] uppercase tracking-wider text-brand">{kicker}</p>
+        <span aria-hidden="true" className="text-brand opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
           →
         </span>
       </div>
@@ -37,7 +37,7 @@ export default function Home() {
         {/* The name of the app — the single warm accent on the dash */}
         <header>
           <h1 className="text-6xl font-semibold tracking-tight">
-            Zomato<span className="text-amber-600">-Lite</span>
+            Zomato<span className="text-brand">-Lite</span>
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-neutral-500">
             One restaurant. One database. Answers computed the moment you ask for

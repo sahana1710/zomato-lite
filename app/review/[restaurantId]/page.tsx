@@ -6,7 +6,7 @@
 
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
-import { StarIcon } from "@/components/StarIcon";
+import { StarIcon, ratingTextClass, ratingFillClass } from "@/components/StarIcon";
 
 export default function ReviewPage({
   params,
@@ -86,7 +86,7 @@ export default function ReviewPage({
           <div className="flex items-baseline justify-between">
             <label className="text-xs uppercase tracking-wider text-neutral-400">Rating</label>
             {rating !== null && (
-              <span className="text-sm font-medium text-amber-600">{rating} / 5</span>
+              <span className={`text-sm font-medium ${ratingTextClass(shown)}`}>{rating} / 5</span>
             )}
           </div>
           <div className="mt-3 flex items-center gap-1">
@@ -98,15 +98,12 @@ export default function ReviewPage({
                 onClick={() => setRating(star)}
                 onMouseEnter={() => setHover(star)}
                 onMouseLeave={() => setHover(null)}
-                className={`group rounded p-1 transition-colors focus:outline-none ${
-                  star <= shown ? "focus-visible:text-amber-500" : ""
-                }`}
+                className="group rounded p-1 transition-colors focus:outline-none"
               >
                 <StarIcon
                   filled={star <= shown}
-                  className={`h-10 w-10 ${
-                    star <= shown ? "" : "text-neutral-300 group-hover:text-amber-300"
-                  }`}
+                  colorClass={ratingFillClass(shown)}
+                  className="h-10 w-10"
                 />
               </button>
             ))}
@@ -132,8 +129,8 @@ export default function ReviewPage({
           <button
             type="submit"
             disabled={!ready || submitting}
-            className={`mt-8 w-full rounded-lg py-3.5 text-sm font-medium text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:cursor-not-allowed disabled:opacity-40 ${
-              ready ? "bg-amber-600 hover:bg-amber-500" : "bg-neutral-900"
+            className={`mt-8 w-full rounded-lg py-3.5 text-sm font-medium text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:cursor-not-allowed disabled:opacity-40 ${
+              ready ? "bg-brand hover:bg-brand-dark" : "bg-neutral-900"
             }`}
           >
             {submitting ? "Sending…" : "Submit review"}
