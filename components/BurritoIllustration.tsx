@@ -1,6 +1,7 @@
-// A real burrito — a photo beats a drawing when the shop is named after one.
-// Photo: "Carne asada burrito" by Dougk49, CC BY-SA 3.0, via Wikimedia Commons.
-// Squared off with object-cover, so whatever the tile size, the burrito stays whole.
+// A studio-styled burrito platter — supplied by the user in-app (pasted screenshot).
+// Rights note: source unverified. Fine for a personal project; confirm the photo's
+// origin/license before any commercial release.
+// Squared off with object-cover, so whatever the tile size, the platter stays whole.
 
 export function BurritoTile({ className = "" }: { className?: string }) {
   return (
