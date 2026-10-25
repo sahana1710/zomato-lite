@@ -151,14 +151,14 @@ export default function RestaurantPage({
             {/* The average — sits with the identity block, given to us as 4.4, printed as 4.4. No adding. No dividing. */}
             <div className="mt-8">
               <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
-              <div className="mt-3 flex items-baseline gap-4">
+              <div className="mt-3 flex items-center gap-4">
                 {/* ← THE LINE: the average is printed, never calculated. */}
-                <p className="text-7xl font-semibold tracking-tight text-amber-600">
+                <p className="text-7xl font-semibold leading-none tracking-tight text-amber-600">
                   {data.averageRating}
                 </p>
-                <div className="flex flex-col">
+                <div className="flex flex-col items-start">
                   <StarRow value={data.averageRating ?? 0} size="h-4 w-4" />
-                  <span className="mt-1.5 text-sm text-neutral-500">
+                  <span className="mt-1 text-sm text-neutral-500">
                     out of 5 · {data.totalReviews} review{data.totalReviews === 1 ? "" : "s"}
                   </span>
                 </div>
