@@ -135,7 +135,7 @@ export default function RestaurantPage({
                 <Chip>{data.area}</Chip>
               </div>
             </div>
-            <BurritoTile className="h-20 w-20 sm:h-24 sm:w-24" />
+            <BurritoTile className="h-28 w-28 sm:h-36 sm:w-36" />
           </header>
 
           {!emptyRoom && (
