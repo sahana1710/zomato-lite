@@ -123,33 +123,23 @@ export default function RestaurantPage({
   return (
     <main className="min-h-screen bg-background text-neutral-900">
       <div className="mx-auto max-w-[560px] px-6 py-14">
-        {/* Restaurant identity — monogram tile, name, chips */}
-        <header className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-widest text-amber-600">Zomato-Lite</p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Chip>{data.cuisine}</Chip>
-              <Chip>{data.area}</Chip>
+        {/* The shelf: identity + average pin to the top; only the reviews scroll */}
+        <div className="sticky top-0 z-10 -mx-6 border-b border-neutral-200 bg-background px-6">
+          {/* Restaurant identity — monogram tile, name, chips */}
+          <header className="flex items-start justify-between gap-4 pb-4 pt-2">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-widest text-amber-600">Zomato-Lite</p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Chip>{data.cuisine}</Chip>
+                <Chip>{data.area}</Chip>
+              </div>
             </div>
-          </div>
-          <BurritoTile className="h-20 w-20 sm:h-24 sm:w-24" />
-        </header>
+            <BurritoTile className="h-20 w-20 sm:h-24 sm:w-24" />
+          </header>
 
-        {emptyRoom ? (
-          <section className="mt-12 rounded-lg border border-dashed border-neutral-300 bg-white p-10 text-center">
-            <p className="text-lg font-medium">No reviews yet.</p>
-            <p className="mt-2 text-sm leading-relaxed text-neutral-500">
-              Be the first — the honest opening deserves an honest rating.
-            </p>
-            <div className="mt-6">
-              <WriteReviewButtonHeroless id={id} />
-            </div>
-          </section>
-        ) : (
-          <>
-            {/* The average — sits with the identity block, given to us as 4.4, printed as 4.4. No adding. No dividing. */}
-            <div className="mt-8">
+          {!emptyRoom && (
+            <div className="pb-4">
               <p className="text-xs uppercase tracking-wider text-neutral-400">Average rating</p>
               <div className="mt-3 flex items-center gap-4">
                 {/* ← THE LINE: the average is printed, never calculated. */}
@@ -164,9 +154,23 @@ export default function RestaurantPage({
                 </div>
               </div>
             </div>
+          )}
+        </div>
 
+        {emptyRoom ? (
+          <section className="mt-10 rounded-lg border border-dashed border-neutral-300 bg-white p-10 text-center">
+            <p className="text-lg font-medium">No reviews yet.</p>
+            <p className="mt-2 text-sm leading-relaxed text-neutral-500">
+              Be the first — the honest opening deserves an honest rating.
+            </p>
+            <div className="mt-6">
+              <WriteReviewButtonHeroless id={id} />
+            </div>
+          </section>
+        ) : (
+          <>
             {/* One Reviews section: the highlighted latest review, then the older ones */}
-            <section className="mt-12 border-t border-neutral-200 pt-10">
+            <section className="mt-8 pt-8">
               <h2 className="text-xs uppercase tracking-widest text-neutral-400">Reviews</h2>
               {data.latestReview && (
                 <div className="relative mt-4 overflow-hidden rounded-lg bg-amber-200/60 p-6">
