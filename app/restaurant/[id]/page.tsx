@@ -6,6 +6,7 @@
 // this page's only job is to display them beautifully.
 
 import { use, useEffect, useState } from "react";
+import Link from "next/link";
 import { StarRow, ratingTextClass } from "@/components/StarIcon";
 import { BurritoTile } from "@/components/BurritoIllustration";
 
@@ -142,7 +143,13 @@ export default function RestaurantPage({
           {/* Restaurant identity — monogram tile, name, chips */}
           <header className="flex items-start justify-between gap-4 pb-4 pt-2">
             <div>
-              <p className="text-sm font-medium uppercase tracking-widest text-brand">Zomato-Lite</p>
+              {/* The brand itself is the way home — click it anywhere and you're back at the start. */}
+              <Link
+                href="/"
+                className="text-sm font-medium uppercase tracking-widest text-brand transition-colors hover:text-brand-dark"
+              >
+                Zomato-Lite
+              </Link>
               <h1 className="mt-2 text-3xl font-semibold tracking-tight">{data.name}</h1>
               {/* Tags first, then the address on its own line below.
                   Note: "Dine-in" is a static page label for now — the API has
